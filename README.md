@@ -1,1 +1,1 @@
-# holbertonschool-cinema_guru
+# Cinema Guru
