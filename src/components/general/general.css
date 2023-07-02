@@ -1,0 +1,113 @@
+.input,
+.select,
+.button,
+.search-bar {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.input label,
+.select label {
+  font-size: 1.2rem;
+}
+
+.input input {
+  border: none;
+  border-bottom: 1px solid red;
+  font-size: 1.2rem;
+  outline: none;
+}
+
+.date {
+  color: white;
+}
+
+.date input {
+  color: white;
+  background-color: #2c2c2c;
+}
+
+.select {
+  color: white;
+}
+
+.select select {
+  border: none;
+  border-bottom: 1px solid red;
+  font-size: 1.2rem;
+  outline: none;
+  background-color: #2c2c2c;
+  color: white;
+}
+
+.button {
+  display: flex;
+  flex-direction: row;
+  background-color: #bb000e;
+  color: white;
+  border: none;
+  padding: 0.2rem 0.7rem;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.button svg {
+  display: flex;
+  margin-right: 10px;
+}
+
+.button:hover {
+  background-color: #e31c25;
+}
+
+.search-bar {
+  position: relative;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 48px;
+  line-height: 64px;
+}
+
+.search-bar {
+  position: relative;
+}
+
+.search-input-container {
+  display: flex;
+  align-items: center;
+}
+
+.search-input {
+  border: none;
+  border-radius: 10rem;
+  padding: 0.5rem 0.5rem 0.5rem 2rem;
+  font-size: 1.2rem;
+  outline: none;
+  background-color: #2c2c2c;
+  color: white;
+}
+
+.search-icon {
+  position: absolute;
+  color: white;
+  opacity: 0.6;
+  left: 0.7rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1rem;
+  transition: opacity 0.3s ease;
+}
+
+.search-bar:hover .search-icon {
+  opacity: 1;
+}
+
+.search-input::placeholder {
+  color: #999999;
+}
+
+.search-input:hover::placeholder {
+  color: white;
+}

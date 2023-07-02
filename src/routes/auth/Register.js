@@ -1,26 +1,29 @@
-import React from "react";
 import "./auth.css";
-
 import Input from "../../components/general/Input";
 import Button from "../../components/general/Button";
+import { faUser, faKey } from "@fortawesome/free-solid-svg-icons";
 
-const Register = ({ username, password, setUsername, setPassword }) => {
+const Register = ({ username, setUsername, password, setPassword }) => {
   return (
     <div>
+      <h1 className="authentication-header">Create a new account</h1>
       <Input
         type="text"
-        placeholder="Username"
+        icon={faUser}
+        label="Username:"
         value={username}
-        onChange={setUsername}
+        setValue={setUsername}
+        className="input username"
       />
       <Input
         type="password"
-        placeholder="Password"
+        icon={faKey}
+        label="Password:"
         value={password}
-        onChange={setPassword}
+        setValue={setPassword}
+        className="input password"
       />
-
-      <Button type="submit" text="Register" />
+      <Button text="Sign Up" icon={faKey} className="button" type="submit" />
     </div>
   );
 };

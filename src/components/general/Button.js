@@ -1,13 +1,14 @@
 import React from "react";
 import "./general.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const Button = ({ text, className, onClick, icon }) => {
+function Button({ text, className, onClick, icon }) {
   return (
     <button className={className} onClick={onClick}>
-      {icon && <span className="icon">{icon}</span>}
+      {icon && <FontAwesomeIcon icon={icon} />}
       {text}
     </button>
   );
-};
+}
 
 export default Button;

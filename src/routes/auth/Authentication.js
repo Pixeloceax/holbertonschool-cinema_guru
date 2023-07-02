@@ -1,22 +1,23 @@
+import React, { useState } from "react";
 import "./auth.css";
-import { useState } from "react";
 import Login from "./Login";
 import Register from "./Register";
 import axios from "axios";
 
-const Authentication = ({ setIsLoggedIn, setUserUsername }) => {
+function Authentication({ setIsLoggedIn, setUserUsername }) {
   const [_switch, setSwitch] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
   const handleSwitch = (value) => {
     setSwitch(value);
     setPassword("");
     setUsername("");
   };
+
   const handleSubmit = (event) => {
     event.preventDefault();
     if (_switch) {
-      console.log(username, password);
       axios
         .post("http://localhost:8001/api/auth/login", {
           username,
@@ -36,21 +37,18 @@ const Authentication = ({ setIsLoggedIn, setUserUsername }) => {
           password,
         })
         .then((response) => {
-          console.log(username, password);
           if (response.data.accessToken) {
             localStorage.setItem("accessToken", response.data.accessToken);
             setUserUsername(username);
             setIsLoggedIn(true);
           }
-        })
-        .catch((error) => {
-          console.log(error.response.data);
         });
     }
   };
+
   return (
-    <form className="authentication" onSubmit={handleSubmit}>
-      <header>
+    <div className="auth">
+      <form className="authentication" onSubmit={handleSubmit}>
         <ul>
           <li
             onClick={() => handleSwitch(true)}
@@ -65,8 +63,6 @@ const Authentication = ({ setIsLoggedIn, setUserUsername }) => {
             Sign up
           </li>
         </ul>
-      </header>
-      <main>
         {_switch ? (
           <Login
             username={username}
@@ -82,9 +78,9 @@ const Authentication = ({ setIsLoggedIn, setUserUsername }) => {
             setPassword={setPassword}
           />
         )}
-      </main>
-    </form>
+      </form>
+    </div>
   );
-};
+}
 
 export default Authentication;

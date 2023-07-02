@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./general.css";
 
 const SelectInput = ({
@@ -9,22 +9,16 @@ const SelectInput = ({
   value,
   setValue,
 }) => {
-  const handleSelect = (e) => {
-    const selectedOptions = Array.from(e.target.selectedOptions).map(
-      (option) => option.value
-    );
-    setValue(multiple ? selectedOptions : selectedOptions[0]);
+  const handleSelect = (event) => {
+    setValue(event.target.value);
   };
 
+  [value, setValue] = useState("");
+
   return (
-    <div>
-      {label && <label>{label}</label>}
-      <select
-        className={className}
-        multiple={multiple}
-        value={value}
-        onChange={handleSelect}
-      >
+    <div className={className}>
+      <label>{label}</label>
+      <select value={value} onChange={handleSelect} multiple={multiple}>
         {options.map((option) => (
           <option key={option.value} value={option.value}>
             {option.label}

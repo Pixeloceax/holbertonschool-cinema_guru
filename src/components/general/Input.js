@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import "./general.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const Input = ({
+function Input({
   label,
   type,
   className,
@@ -9,28 +10,25 @@ const Input = ({
   setValue,
   icon,
   inputAttributes,
-}) => {
-  [value, setValue] = useState("");
-
-  const handleInput = (e) => {
-    setValue(e.target.value);
+}) {
+  const handleInput = (event) => {
+    setValue(event.target.value);
   };
 
   return (
-    <div>
-      {label && <label>{label}</label>}
-      <div className="input-container">
-        {icon && <span className="icon">{icon}</span>}
-        <input
-          className={className}
-          type={type}
-          value={value}
-          onChange={handleInput}
-          {...inputAttributes}
-        />
+    <div className={className}>
+      <div>
+        {icon && <FontAwesomeIcon icon={icon} />}
+        <label>{label}</label>
       </div>
+      <input
+        type={type}
+        value={value}
+        onChange={handleInput}
+        {...inputAttributes}
+      />
     </div>
   );
-};
+}
 
 export default Input;
