@@ -1,73 +1,110 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import { useEffect } from "react";
+import "./movies.css";
+import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClock, faStar } from "@fortawesome/free-solid-svg-icons";
+import axios from "axios";
 import Tag from "./Tag";
 
-function MovieCard({ movie }) {
+function MovieCard({ movies }) {
   const [isFavorite, setIsFavorite] = useState(false);
   const [isWatchLater, setIsWatchLater] = useState(false);
-  const API_URL = "http://localhost:8001";
-  const unavailable =
+  const unavaiable =
     "https://www.publicdomainpictures.net/pictures/280000/velka/not-found-image-15383864787lu.jpg";
 
-  const handleClick = async (type) => {
+  const handleClick = (type) => {
     const accessToken = localStorage.getItem("accessToken");
-    const url = `${API_URL}/api/titles/${type}/${movie.imdbId}`;
-    const method = isFavorite || isWatchLater ? "delete" : "post";
-    try {
-      const response = await axios[method](
-        url,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      if (response.status === 200) {
-        if (type === "favorite") {
-          setIsFavorite(!isFavorite);
-        } else if (type === "watchlater") {
-          setIsWatchLater(!isWatchLater);
-        }
+    if (type === "favorite") {
+      if (isFavorite) {
+        setIsFavorite(false);
+
+        axios.delete(
+          `http://localhost:8001/api/titles/favorite/${movies.imdbId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+      } else {
+        setIsFavorite(true);
+        axios.post(
+          `http://localhost:8001/api/titles/favorite/${movies.imdbId}`,
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
       }
-    } catch (error) {
-      console.error(error);
+    }
+
+    if (type === "watchlater") {
+      if (isWatchLater) {
+        setIsWatchLater(false);
+        axios.delete(
+          `http://localhost:8001/api/titles/watchlater/${movies.imdbId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+      } else {
+        setIsWatchLater(true);
+        axios.post(
+          `http://localhost:8001/api/titles/watchlater/${movies.imdbId}`,
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+      }
     }
   };
 
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
-    const favoriteUrl = `${API_URL}/api/titles/favorite/`;
-    const watchLaterUrl = `${API_URL}/api/titles/watchlater/`;
-    const fetchData = async () => {
-      try {
-        const [favoriteRes, watchLaterRes] = await Promise.all([
-          axios.get(favoriteUrl, {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${accessToken}`,
-            },
-          }),
-          axios.get(watchLaterUrl, {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${accessToken}`,
-            },
-          }),
-        ]);
-        const favoriteIds = favoriteRes.data.map((item) => item.id);
-        const watchLaterIds = watchLaterRes.data.map((item) => item.id);
-        setIsFavorite(favoriteIds.includes(movie.id));
-        setIsWatchLater(watchLaterIds.includes(movie.id));
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchData();
-  }, [movie.id]);
+    axios
+      .get(`http://localhost:8001/api/titles/favorite/`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+      .then((res) => res.data)
+      .then((data) => {
+        data.forEach((element) => {
+          if (element.id === movies.id) {
+            setIsFavorite(true);
+          }
+        });
+      })
+      .catch((err) => console.error(err, "movies Card"));
+    axios
+      .get(`http://localhost:8001/api/titles/watchlater/`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+      .then((res) => res.data)
+      .then((data) => {
+        data.forEach((element) => {
+          if (element.id === movies.id) {
+            setIsWatchLater(true);
+          }
+        });
+      })
+      .catch((err) => console.error(err, "movies Card"));
+  }, []);
 
   return (
     <li className="movie-card-Container">
@@ -87,26 +124,32 @@ function MovieCard({ movie }) {
       </div>
       <div className="header-card">
         <picture className="card-container-img">
-          <img
-            width={300}
-            height={300}
-            src={movie.imageurls.length > 0 ? movie.imageurls[0] : unavailable}
-            alt={movie.title.title}
-            onError={(e) => {
-              e.target.src = unavailable;
-            }}
-          />
+          {console.log(movies)}
+          {movies.imageurls ? (
+            <img
+              width={300}
+              height={300}
+              src={movies.imageurls}
+              alt={movies.title}
+              onError={(e) => {
+                e.target.src = unavaiable;
+                e.onerror = null;
+              }}
+            />
+          ) : (
+            <img src={unavaiable} alt="not avalaible" />
+          )}
         </picture>
-        <span className="title-card">{movie.title.title}</span>
+        <span className="title-card">{movies.title}</span>
       </div>
       <div className="body-card">
-        <p className="synopsis-card">{movie.synopsis || "-Not Available-"}</p>
+        <p className="synopsis-card">
+          {movies.synopsis === "" ? "-Not Avalaible-" : movies.synopsis}
+        </p>
         <div className="genres-container-card">
-          <ul>
-            {movie.genres.map((item, index) => (
-              <Tag key={`${item}-${index}`} genre={item} filter={true} />
-            ))}
-          </ul>
+          {movies.genres.map((item) => (
+            <Tag key={item} genre={item} filter={true} />
+          ))}
         </div>
       </div>
     </li>

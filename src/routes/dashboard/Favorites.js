@@ -1,46 +1,35 @@
-import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import "./dashboard.css";
 import MovieCard from "../../components/movies/MovieCard";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
-export default function Favorites() {
+const Favorites = () => {
   const [movies, setMovies] = useState([]);
-  const navigate = useNavigate();
-
   useEffect(() => {
-    const fetchMovies = async () => {
-      try {
-        const accessToken = localStorage.getItem("accessToken");
-        if (!accessToken) {
-          navigate("/login");
-        } else {
-          const response = await axios.get(
-            "http://localhost:8001/api/titles/favorite/",
-            {
-              headers: {
-                Authorization: `Bearer ${accessToken}`,
-                Accept: "application/json",
-                "Content-Type": "application/json",
-              },
-            }
-          );
-          setMovies(response.data);
-        }
-      } catch (error) {
-        console.error(error);
-        navigate("/login");
-      }
-    };
-    fetchMovies();
-  }, [navigate]);
-
+    const accessToken = localStorage.getItem("accessToken");
+    axios
+      .get("http://localhost:8001/api/titles/favorite/", {
+        headers: {
+          authorization: `Bearer ${accessToken}`,
+        },
+      })
+      .then((response) => {
+        setMovies(response.data);
+      });
+  }, []);
   return (
-    <div>
-      <h1>Movies you like</h1>
-      {movies.map((movie, index) => (
-        <MovieCard key={index.id} movie={movie} />
-      ))}
+    <div className="personal-moovies">
+      <div className="fav">
+        <h1>MOVIES YOU LIKE</h1>
+        {console.log(movies, "movies from favorites")}
+        <div className="cards">
+          {movies.map((movies) => (
+            <MovieCard key={movies.id} movies={movies} />
+          ))}
+        </div>
+      </div>
     </div>
   );
-}
+};
+
+export default Favorites;

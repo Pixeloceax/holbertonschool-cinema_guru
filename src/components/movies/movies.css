@@ -1,0 +1,166 @@
+.filter-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 2rem;
+  margin-left: 4.375rem;
+}
+
+.tag {
+  background-color: transparent;
+  border-radius: 5px;
+  color: white;
+  display: inline-block;
+  font-weight: 600;
+  font-size: 0.8rem;
+  margin: 0 0.5rem 0.5rem 0;
+  padding: 0.5rem;
+  border: 1px solid #e31c25;
+  border-radius: 100px;
+  cursor: pointer;
+}
+
+.tag:hover {
+  background-color: #e31c25;
+  transition: background-color 0.3s ease;
+}
+
+.clicked {
+  background-color: #333;
+  color: #fff;
+}
+
+.tags-filter {
+  width: 35%;
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.filter-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.filter-container input {
+  width: 100%;
+  padding: 0.5rem;
+  border-radius: 5px;
+  border: 1px solid #e31c25;
+  font-size: 1rem;
+}
+
+.left-filter {
+  width: 48%;
+}
+
+.input-search {
+  display: flex;
+  color: white;
+}
+
+.input-search input {
+  color: white;
+  border: none;
+  width: 80%;
+  border-bottom: 1px solid red;
+  background-color: #333;
+  border-radius: 0;
+}
+
+.left-filter .search-bar .search-input-container input {
+  border: none;
+  padding-left: 40px;
+  border-radius: 100px;
+}
+
+.input-search .input select {
+  border: none;
+  background-color: #333;
+  color: white;
+  border-bottom: 1px solid red;
+  border-radius: 0;
+  height: 35px;
+}
+
+.movie-card-Container {
+  width: 300px;
+  min-height: 400px;
+  margin-bottom: 20px;
+  position: relative;
+  list-style: none;
+  background: #2c2c2c;
+  box-shadow: 12px 10px 13px rgba(255, 255, 255, 0.05);
+  border-radius: 0px;
+  transition: transform 0.2s;
+}
+
+.movie-card-Container:hover {
+  transform: scale(1.05);
+}
+
+.icons-card {
+  position: absolute;
+  right: 0;
+  top: 8px;
+  color: #ffffff;
+  z-index: 1;
+}
+
+.icons-card .icon-later-container,
+.icons-card .icon-fav-container {
+  margin-right: 8px;
+  font-size: 19px;
+  cursor: pointer;
+}
+
+.icons-card .icon-red {
+  color: #e31c25;
+}
+
+.header-card {
+  height: 300px;
+  position: relative;
+}
+
+.title-card {
+  width: 300px;
+  height: 50px;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  text-align: left;
+  color: #ffffff;
+  font-size: 20px;
+}
+
+.synopsis-card {
+  padding: 3px;
+  color: #ffffff;
+  text-align: left;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 13px;
+}
+
+.genres-container-card {
+  padding-bottom: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.card-container-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 0px;
+}
+
+.clicked {
+  background-color: red;
+  color: #fff;
+  transition: background-color 0.3s ease;
+}
